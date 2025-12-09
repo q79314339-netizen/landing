@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Contact Landing Page</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f4f8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .container {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 600px;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  p {
+    margin-bottom: 30px;
+    color: #555;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  button {
+    background-color: #25D366;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  button:hover {
+    background-color: #1ebe5d;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1 id="title">We Are a Chinese Factory 🥰</h1>
+  <p id="description">
+    Our products include bags, shoes, clothes, watches, and much more 🤩🥰  
+    Click the button below to contact us!
+  </p>
+  <button id="nextBtn">Contact Us</button>
+</div>
+
+<script>
+// WhatsApp 轮流跳转
+const links = [
+  "https://wa.me/8618396503253",
+  "https://wa.me/8618050517014",
+  "https://wa.me/8618159028424"
+];
+
+let index = parseInt(localStorage.getItem('linkIndex')) || 0;
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+  window.open(links[index], '_blank');
+  index = (index + 1) % links.length;
+  localStorage.setItem('linkIndex', index);
+});
+
+// =============================
+//       多语言内容
+// =============================
+const langText = {
+  en: {
+    title: "We Are a Chinese Factory 🥰",
+    desc: "Our products include bags, shoes, clothes, watches, and much more 🤩🥰 Click the button below to contact us!",
+    btn: "Contact Us"
+  },
+  fr: {
+    title: "Nous sommes une usine chinoise 🥰",
+    desc: "Nos produits incluent des sacs, chaussures, vêtements, montres et bien plus 🤩🥰 Cliquez sur le bouton ci-dessous pour nous contacter !",
+    btn: "Nous contacter"
+  },
+  it: {
+    title: "Siamo una fabbrica cinese 🥰",
+    desc: "I nostri prodotti includono borse, scarpe, vestiti, orologi e molto altro 🤩🥰 Clicca il pulsante qui sotto per contattarci!",
+    btn: "Contattaci"
+  }
+};
+
+// 国家对应语言
+const countryToLang = {
+  FR: "fr", BE: "fr", CH: "fr",   // 法语区
+  IT: "it", CH: "it",            // 意大利语区
+  US: "en", GB: "en", CA: "en", AU: "en" // 英语国家
+};
+
+// =============================
+//      自动根据 IP 切换语言
+// =============================
+fetch("https://ipapi.co/json/")
+  .then(res => res.json())
+  .then(data => {
+    const lang = countryToLang[data.country] || "en";
+
+    document.getElementById("title").innerText = langText[lang].title;
+    document.getElementById("description").innerText = langText[lang].desc;
+    document.getElementById("nextBtn").innerText = langText[lang].btn;
+  })
+  .catch(() => {
+    // 失败默认英文
+  });
+</script>
+
+</body>
+</html>
