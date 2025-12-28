@@ -16,6 +16,31 @@
     min-height: 100vh;
     margin: 0;
     padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  body::before, body::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  body::before {
+    width: 500px;
+    height: 500px;
+    background: rgba(255,255,255,0.1);
+    top: -100px;
+    left: -100px;
+  }
+
+  body::after {
+    width: 700px;
+    height: 700px;
+    background: rgba(255,255,255,0.08);
+    bottom: -150px;
+    right: -150px;
   }
 
   .container {
@@ -26,6 +51,8 @@
     text-align: center;
     max-width: 600px;
     width: 100%;
+    position: relative;
+    z-index: 1;
   }
 
   .avatar-placeholder {
@@ -33,14 +60,21 @@
     height: 140px;
     margin: 0 auto 20px;
     border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     overflow: hidden;
-    background: #25D366;
+    animation: pulse 2s infinite;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
     font-size: 48px;
     font-weight: bold;
+    color: white;
+    background: #25D366;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
   }
 
   h1 {
@@ -63,24 +97,38 @@
     font-size: 18px;
     border-radius: 10px;
     cursor: pointer;
+    transition: background 0.3s, transform 0.1s;
+    margin-bottom: 10px;
   }
 
   button:hover {
     background-color: #1ebe5d;
   }
 
+  button:active {
+    transform: scale(0.97);
+  }
+
+  .tip {
+    display: none;
+    margin-left: 10px;
+    font-size: 16px;
+    color: #25D366;
+  }
+
   .info-section {
     text-align: left;
-    margin-top: 30px;
+    margin-top: 20px;
   }
 
   .info-section h2 {
+    color: #333;
     font-size: 20px;
     margin-bottom: 10px;
-    color: #333;
   }
 
   .info-section ul {
+    list-style-type: disc;
     padding-left: 20px;
     color: #555;
   }
@@ -89,64 +137,66 @@
     margin-bottom: 8px;
     font-size: 16px;
   }
+
+  .float-icons {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
 </style>
 </head>
-
 <body>
 
 <div class="container">
   <div class="avatar-placeholder">H</div>
 
-  <h1>We Are a Chinese Factory 🥰</h1>
-  <p>
-    Our products include bags, shoes, clothes, watches and more 🤩  
-    Click the button below to contact us on WhatsApp!
+  <h1 id="title">We Are a Chinese Factory 🥰</h1>
+  <p id="description">
+    Our products include bags, shoes, clothes, watches, and much more 🤩🥰  
+    Click the button below to WhatsApp!
   </p>
 
-  <button id="whatsappBtn">Contact via WhatsApp</button>
+  <button id="whatsappBtn">WhatsApp</button>
+  <span class="tip" id="tip">Opening WhatsApp...</span>
 
   <div class="info-section">
-    <h2>🚚 Shipping</h2>
+    <h2>🚚 Shipping Process</h2>
     <ul>
-      <li>Orders processed within 24 hours</li>
-      <li>DHL / FedEx / UPS shipping</li>
-      <li>Tracking number provided</li>
+      <li>We process your order within 24 hours.</li>
+      <li>Shipping via international courier (DHL, FedEx, UPS).</li>
+      <li>Tracking number provided after shipment.</li>
     </ul>
 
-    <h2>💰 Payment</h2>
+    <h2>💰 Payment Methods</h2>
     <ul>
-      <li>PayPal</li>
-      <li>Western Union</li>
-      <li>Bank Transfer</li>
+      <li>We accept PayPal, Western Union, and Bank Transfer.</li>
+      <li>Payment confirmation required before shipment.</li>
     </ul>
 
-    <h2>📩 Free Consultation</h2>
+    <h2>📩 Free Consultation & Quotation</h2>
     <ul>
-      <li>Send product pictures</li>
-      <li>Free quotation</li>
-      <li>Fast WhatsApp reply</li>
+      <li>Send us pictures of the product you need.</li>
+      <li>We provide free quotes and recommendations.</li>
+      <li>Consultation via WhatsApp for quick response.</li>
     </ul>
   </div>
 </div>
 
-<!-- ===============================
-     WhatsApp 随机分配（小白稳定版）
-     =============================== -->
 <script>
+// WhatsApp 多号码随机 + Cookie 固定
 const links = [
   "https://wa.me/8618159028424",
-  "https://wa.me/8618396503253",
-  "https://wa.me/8618050517014",
   "https://wa.me/8618042421517"
 ];
 
-// 读取 Cookie
 function getCookie(name) {
   const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
   return match ? match[2] : null;
 }
 
-// 写 Cookie（30 天）
 function setCookie(name, value) {
   document.cookie = name + "=" + value + ";path=/;max-age=2592000";
 }
@@ -158,9 +208,22 @@ if (idx === null) {
   setCookie("wa_idx", idx);
 }
 
-// 点击按钮跳转
-document.getElementById("whatsappBtn").onclick = function () {
-  window.location.href = links[idx];
+// 点击按钮优化：动画 + 提示 + 新标签打开
+const btn = document.getElementById('whatsappBtn');
+const tip = document.getElementById('tip');
+
+btn.onclick = function(e) {
+  e.preventDefault();
+
+  // 显示提示
+  tip.style.display = 'inline';
+
+  // 按钮缩放动画
+  btn.style.transform = 'scale(0.95)';
+  setTimeout(() => { btn.style.transform = 'scale(1)'; }, 150);
+
+  // 延迟 150ms 打开 WhatsApp
+  setTimeout(() => { window.open(links[idx], '_blank'); }, 150);
 };
 </script>
 
