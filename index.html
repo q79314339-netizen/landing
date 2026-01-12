@@ -1,142 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WhatsApp Contact Landing Page</title>
-
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-  }
-
-  .container {
-    background: rgba(255,255,255,0.95);
-    padding: 30px 40px;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-    text-align: center;
-    max-width: 600px;
-    width: 100%;
-  }
-
-  .avatar-placeholder {
-    width: 140px;
-    height: 140px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    overflow: hidden;
-    background: #25D366;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 48px;
-    font-weight: bold;
-  }
-
-  h1 {
-    margin-bottom: 20px;
-    color: #333;
-  }
-
-  p {
-    margin-bottom: 30px;
-    color: #555;
-    font-size: 18px;
-    line-height: 1.6;
-  }
-
-  button {
-    background-color: #25D366;
-    color: white;
-    border: none;
-    padding: 15px 25px;
-    font-size: 18px;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-
-  button:hover {
-    background-color: #1ebe5d;
-  }
-
-  .info-section {
-    text-align: left;
-    margin-top: 30px;
-  }
-
-  .info-section h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #333;
-  }
-
-  .info-section ul {
-    padding-left: 20px;
-    color: #555;
-  }
-
-  .info-section ul li {
-    margin-bottom: 8px;
-    font-size: 16px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <title>Redirecting to WhatsApp...</title>
 </head>
-
 <body>
 
-<div class="container">
-  <div class="avatar-placeholder">H</div>
-
-  <h1>We Are a Chinese Factory 🥰</h1>
-  <p>
-    Our products include bags, shoes, clothes, watches and more 🤩  
-    Click the button below to contact us on WhatsApp!
-  </p>
-
-  <button id="whatsappBtn">Contact via WhatsApp</button>
-
-  <div class="info-section">
-    <h2>🚚 Shipping</h2>
-    <ul>
-      <li>Orders processed within 24 hours</li>
-      <li>DHL / FedEx / UPS shipping</li>
-      <li>Tracking number provided</li>
-    </ul>
-
-    <h2>💰 Payment</h2>
-    <ul>
-      <li>PayPal</li>
-      <li>Western Union</li>
-      <li>Bank Transfer</li>
-    </ul>
-
-    <h2>📩 Free Consultation</h2>
-    <ul>
-      <li>Send product pictures</li>
-      <li>Free quotation</li>
-      <li>Fast WhatsApp reply</li>
-    </ul>
-  </div>
-</div>
-
-<!-- ===============================
-     WhatsApp 随机分配（小白稳定版）
-     =============================== -->
 <script>
 const links = [
-  "https://wa.me/8618159028424",
-  "https://wa.me/8618396503253",
-  "https://wa.me/8618050517014"
+  "https://wa.me/8613489920964",
+  "https://wa.me/8618850714009",
+  "https://wa.me/8617346286753"
 ];
 
 // 读取 Cookie
@@ -150,19 +24,16 @@ function setCookie(name, value) {
   document.cookie = name + "=" + value + ";path=/;max-age=2592000";
 }
 
-// 第一次访问随机分配 WhatsApp
+// 第一次访问随机分配
 let idx = getCookie("wa_idx");
 if (idx === null) {
   idx = Math.floor(Math.random() * links.length);
   setCookie("wa_idx", idx);
 }
 
-// 点击按钮跳转
-document.getElementById("whatsappBtn").onclick = function () {
-  window.location.href = links[idx];
-};
+// 自动跳转 WhatsApp
+window.location.replace(links[idx]);
 </script>
 
 </body>
 </html>
-
