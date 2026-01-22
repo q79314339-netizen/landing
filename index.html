@@ -5,105 +5,146 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WhatsApp Contact Landing Page</title>
 
+<!-- Facebook Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+const PIXELS = ['1355803952514780'];
+function getCookie(name) {
+  const m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return m ? m[2] : null;
+}
+function setCookie(name, value) {
+  document.cookie = name + "=" + value + ";path=/;max-age=2592000";
+}
+let pixelIndex = getCookie('pixel_idx');
+if (pixelIndex === null) {
+  pixelIndex = Math.floor(Math.random() * PIXELS.length);
+  setCookie('pixel_idx', pixelIndex);
+}
+const ACTIVE_PIXEL = PIXELS[pixelIndex];
+fbq('init', ACTIVE_PIXEL);
+fbq('track', 'PageView');
+</script>
+
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1355803952514780&ev=PageView&noscript=1"/>
+</noscript>
+
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-  }
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+}
+.container {
+  background: rgba(255,255,255,0.95);
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+.avatar {
+  width: 140px;
+  height: 140px;
+  background: #25D366;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  color: #fff;
+  font-size: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+h1 { margin-bottom: 20px; color: #333; }
+p { margin-bottom: 30px; color: #555; font-size: 18px; line-height: 1.6; }
+button {
+  background: #25D366;
+  color: #fff;
+  border: none;
+  padding: 15px 25px;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+button:hover { background:#1ebe5d; }
 
-  .container {
-    background: rgba(255,255,255,0.95);
-    padding: 30px 40px;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-    text-align: center;
-    max-width: 600px;
-    width: 100%;
-  }
+.info-section { text-align: left; margin-top: 30px; }
+.info-section h2 { font-size: 20px; margin-bottom: 10px; color: #333; }
+.info-section ul { padding-left: 20px; color: #555; }
+.info-section ul li { margin-bottom: 8px; font-size: 16px; }
 
-  .avatar-placeholder {
-    width: 140px;
-    height: 140px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    overflow: hidden;
-    background: #25D366;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 48px;
-    font-weight: bold;
-  }
-
-  h1 {
-    margin-bottom: 20px;
-    color: #333;
-  }
-
-  p {
-    margin-bottom: 30px;
-    color: #555;
-    font-size: 18px;
-    line-height: 1.6;
-  }
-
-  button {
-    background-color: #25D366;
-    color: white;
-    border: none;
-    padding: 15px 25px;
-    font-size: 18px;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-
-  button:hover {
-    background-color: #1ebe5d;
-  }
-
-  .info-section {
-    text-align: left;
-    margin-top: 30px;
-  }
-
-  .info-section h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #333;
-  }
-
-  .info-section ul {
-    padding-left: 20px;
-    color: #555;
-  }
-
-  .info-section ul li {
-    margin-bottom: 8px;
-    font-size: 16px;
-  }
+.testimonials-container { margin-top: 20px; overflow: hidden; position: relative; }
+.testimonials-track { display: flex; transition: transform 0.4s ease; }
+.testimonial-card {
+  flex: 0 0 80%;
+  margin-right: 15px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  padding: 15px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.testimonial-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: bold;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.testimonial-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.4;
+}
+.testimonials-controls { margin-top: 10px; text-align: center; }
+.testimonials-controls button {
+  background: #25D366;
+  color: #fff;
+  border: none;
+  padding: 5px 12px;
+  margin: 0 5px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.testimonials-controls button:hover { background: #1ebe5d; }
+@media (max-width: 768px) { .testimonial-card { flex: 0 0 90%; } }
 </style>
 </head>
-
 <body>
 
 <div class="container">
-  <div class="avatar-placeholder">H</div>
-
-  <h1>We Are a Chinese Factory 🥰</h1>
+  <div class="avatar">H</div>
+  <h1>We Are a Factory with 15 Years of Experience 🥰</h1>
   <p>
     Our products include bags, shoes, clothes, watches and more 🤩  
     Click the button below to contact us on WhatsApp!
   </p>
-
-  <button id="whatsappBtn">Contact via WhatsApp</button>
+  <button id="waBtn">Contact via WhatsApp</button>
 
   <div class="info-section">
     <h2>🚚 Shipping</h2>
@@ -126,44 +167,104 @@
       <li>Free quotation</li>
       <li>Fast WhatsApp reply</li>
     </ul>
+
+    <h2>🌟 Customer Testimonials</h2>
+    <div class="testimonials-container">
+      <div class="testimonials-track" id="testimonialsTrack"></div>
+      <div class="testimonials-controls">
+        <button id="prevBtn">&#8592;</button>
+        <button id="nextBtn">&#8594;</button>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ===============================
-     WhatsApp 随机分配（小白稳定版）
-     =============================== -->
 <script>
-const links = [
-  "https://wa.me/8618159028424",
-  "https://wa.me/8618396503253",
-  "https://wa.me/8617346286753",
-  "https://wa.me/8618050517014"
+// WhatsApp 随机分配
+const WA_POOL = [
+  { link: "https://wa.me/8618159028424", event: "WA_1" },
+  { link: "https://wa.me/8618396503253", event: "WA_2" },
+  { link: "https://wa.me/8618050517014", event: "WA_3" }
 ];
 
-// 读取 Cookie
 function getCookie(name) {
-  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-  return match ? match[2] : null;
+  const m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return m ? m[2] : null;
 }
-
-// 写 Cookie（30 天）
 function setCookie(name, value) {
   document.cookie = name + "=" + value + ";path=/;max-age=2592000";
 }
 
-// 第一次访问随机分配 WhatsApp
-let idx = getCookie("wa_idx");
-if (idx === null) {
-  idx = Math.floor(Math.random() * links.length);
-  setCookie("wa_idx", idx);
+let waIndex = getCookie('wa_idx');
+if (waIndex === null) {
+  waIndex = Math.floor(Math.random() * WA_POOL.length);
+  setCookie('wa_idx', waIndex);
 }
 
-// 点击按钮跳转
-document.getElementById("whatsappBtn").onclick = function () {
-  window.location.href = links[idx];
+document.getElementById('waBtn').onclick = function () {
+  const eventId = 'evt_' + Date.now() + '_' + Math.random().toString(36).substr(2,6);
+  fbq('track', 'Contact', {}, {eventID: eventId});
+  fbq('trackCustom', WA_POOL[waIndex].event, {}, {eventID: eventId});
+  setTimeout(function () { window.location.href = WA_POOL[waIndex].link; }, 350);
 };
+
+// 客户名字和评价
+const customerNames = ["Alice","Bob","Charlie","Diana","Ethan","Fiona","George","Hannah","Ivan","Julia","Kevin","Laura"];
+const allTestimonials = [
+  "Great quality, fast delivery! Highly recommend.",
+  "Excellent service, very satisfied with my order.",
+  "Amazing products and very responsive WhatsApp support.",
+  "Products exceeded my expectations!",
+  "Very reliable supplier, smooth transaction.",
+  "Love the quality of the products, will order again.",
+  "Fast shipping and good communication.",
+  "Highly professional, very happy with my purchase."
+];
+
+// 随机颜色生成
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i=0;i<6;i++) color += letters[Math.floor(Math.random()*16)];
+  return color;
+}
+
+function getRandomTestimonials(n) {
+  const shuffled = allTestimonials.sort(()=>0.5-Math.random());
+  return shuffled.slice(0,n);
+}
+
+function getRandomName() {
+  return customerNames[Math.floor(Math.random()*customerNames.length)];
+}
+
+// 生成评价卡片
+const track = document.getElementById('testimonialsTrack');
+const testimonials = getRandomTestimonials(3);
+testimonials.forEach(text=>{
+  const name = getRandomName();
+  const color1 = getRandomColor();
+  const color2 = getRandomColor();
+  const div = document.createElement('div');
+  div.className = 'testimonial-card';
+  div.innerHTML = `
+    <div class="testimonial-avatar" style="background: linear-gradient(135deg, ${color1}, ${color2})">
+      ${name.charAt(0)}
+    </div>
+    <p><strong>${name}:</strong> "${text}"</p>
+  `;
+  track.appendChild(div);
+});
+
+// 轮播逻辑
+const cards = track.children;
+let index = 0;
+function showSlide(i){ track.style.transform = `translateX(-${i*85}%)`; }
+
+setInterval(()=>{ index=(index+1)%cards.length; showSlide(index); }, 3000);
+document.getElementById('prevBtn').onclick = ()=>{ index=(index-1+cards.length)%cards.length; showSlide(index); };
+document.getElementById('nextBtn').onclick = ()=>{ index=(index+1)%cards.length; showSlide(index); };
 </script>
 
 </body>
 </html>
-
